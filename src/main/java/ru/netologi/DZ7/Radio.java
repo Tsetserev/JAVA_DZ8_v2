@@ -2,68 +2,74 @@ package ru.netologi.DZ7;
 
 
 public class Radio {
-    protected int currentStation;
-    protected int currentVolume;
 
-    public void increaseVolume() {
-        if (currentVolume < 10) {
-            currentVolume++;
+    private int currentNumberRadioStation;
+    private int maxNumberRadioStation;
+    private int minNumberRadioStation;
+    private int currentSoundVolume;   // текущая громкость звука
+
+    public Radio() {
+        maxNumberRadioStation = 9;
+        minNumberRadioStation = 0;
+    }
+
+    public Radio(int quantityRadioStation) {
+        this.maxNumberRadioStation = quantityRadioStation - 1;
+    }
+
+    public int getCurrentNumberRadioStation() {
+        return currentNumberRadioStation;
+    }
+
+    public void setCurrentNumberRadioStation(int newCurrentNumberRadioStation) {
+        if (newCurrentNumberRadioStation < minNumberRadioStation) {
+            return;
+        }
+        if (newCurrentNumberRadioStation > maxNumberRadioStation) {
+            return;
+        }
+        currentNumberRadioStation = newCurrentNumberRadioStation;
+    }
+
+    public void nextNumberRadioStation() {    // переключение на +
+        if (currentNumberRadioStation < maxNumberRadioStation) {
+            currentNumberRadioStation++;
         } else {
-            currentVolume = 10;
+            currentNumberRadioStation = minNumberRadioStation;
         }
     }
 
-    public void decreaseVolume() {
-        if (currentVolume > 0) {
-            currentVolume--;
-        }
-    }
-
-    public void nextStation() {
-        if (currentStation < 9) {
-            currentStation++;
+    public void prevNumberRadioStation() { //переключение на -
+        if (currentNumberRadioStation > minNumberRadioStation) {
+            currentNumberRadioStation--;
         } else {
-            currentStation = 0;
+            currentNumberRadioStation = maxNumberRadioStation;
         }
     }
 
-    public short previousStation() {
-        if (currentStation > 0) {
-            currentStation--;
-        } else {
-            currentStation = 9;
-        }
-        return 0;
+    public int getCurrentSoundVolume() {
+        return currentSoundVolume;
     }
 
-
-    public int getCurrentStation() {
-        return currentStation;
-    }
-
-    public void setCurrentStation(int currentStation) {
-
-        if (currentStation < 0 ) {
+    public void setCurrentSoundVolume(int newCurrentSoundVolume) {  //  передача данных о р-станции
+        if (newCurrentSoundVolume < 0) {
             return;
         }
-        if (currentStation > 9 ) {
+        if (newCurrentSoundVolume > 100) {
             return;
         }
-
-        this.currentStation = currentStation;
+        currentSoundVolume = newCurrentSoundVolume;
     }
 
-    public int getCurrentVolume() {
-        return currentVolume;
+    public void increaseVolumeSound() {    //громкости+
+        if (currentSoundVolume < 100) {
+            currentSoundVolume++;
+        }
     }
 
-    public void setCurrentVolume(int currentVolume) {
-        if (currentVolume < 0) {
-            return;
+    public void decreaseVolumeSound() { // громкости -
+        if (currentSoundVolume > 0) {
+            currentSoundVolume--;
         }
-        if (currentVolume > 10) {
-            return;
-        }
-        this.currentVolume = currentVolume;
     }
 }
